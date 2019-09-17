@@ -1,0 +1,47 @@
+package eft;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class StandardBank 
+{
+	 public static WebDriver driver;
+
+	    static String eftref;
+	    public static String con;
+	    public static String fail;
+	public static void EmailLogin(String email, String password)
+    {
+       ChromeOptions option = new ChromeOptions();
+       option.addArguments("--headless", "--disable-gpu", "--window-size=1200,900");
+        //System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", @"C:\EFT\chromedriver.exe");
+        //driver = new ChromeDriver("C:\\EFT", option);
+        //var service = ChromeDriverService.CreateDefaultService(AppDomain.CurrentDomain.BaseDirectory);
+        //Convert.ToString(service);
+        //option.BinaryLocation = "C:\\Users\\Public\\chromedriver.exe";
+        //string opt = Convert.ToString(service);
+        //opt += @".chromedriver";
+        //option.BinaryLocation = @"C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe";
+        //System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", "C:\\Users\\Public\\chromedriver.exe");
+        driver = new ChromeDriver(/*service, option*/);
+
+        driver.get("https://onlinebanking.standardbank.co.za/#/login?intcmp=coza-sitewide-headernav-direct-login");
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id = 'username']"))).sendKeys(email);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text() = 'Next']"))).click();
+
+        //if (LibraryUtils.IsElementPresent(By.xpath("//span[text() = 'Sign In With Password']/..")))
+        //{
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text() = 'Sign In With Password']/.."))).click();
+        //}
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type = 'password']"))).sendKeys(password);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text() = 'Sign in']/.."))).click();
+    }
+}
